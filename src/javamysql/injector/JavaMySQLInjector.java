@@ -35,7 +35,7 @@ public class JavaMySQLInjector {
         String url = "jdbc:mysql://localhost/" + bd;
         
         Connection conect = null;
-        Statement st = conect.createStatement();
+        Statement st =  conect.createStatement();
         
         try {
 
