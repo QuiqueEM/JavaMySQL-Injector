@@ -1,4 +1,5 @@
 package javamysql.injector;
+import com.mysql.jdbc.ResultSet;
 import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +21,7 @@ public class JavaMySQLInjector {
         String tiempo = Hora.toString() + ":" + Minutos.toString();
 
         try {
-            st.executeUpdate("INSERT INTO ingreso (No_ingreso, Valor, Hora) VALUES ('','" + Valor + "','" + tiempo + "')");
+            st.executeUpdate("INSERT INTO ingreso ( Valor, Hora) VALUES ('" + Valor + "','" + tiempo + "')");
         } catch (SQLException ex) {
             Logger.getLogger(JavaMySQLInjector.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -33,22 +34,23 @@ public class JavaMySQLInjector {
         String usuario = "root";
         String password = "root";
         String url = "jdbc:mysql://localhost/" + bd;
-        
-        Connection conect = null;
-        Statement st =  conect.createStatement();
-        
+            
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
-            conect = DriverManager.getConnection(url, usuario, password);
-            if (conect != null) {
+            //Connection conexion = DriverManager.getConnection ("jdbc:mysql://localhost/prueba","root", "la_clave");
+            // Preparamos la consulta 
+           
+            Connection conexion = DriverManager.getConnection(url, usuario, password);
+            Statement st = (Statement) conexion.createStatement();
+            if (conexion != null) {
                 System.out.println("La conexion a la base de datos " + url + " fue satisfactoria");
                 System.out.println(Insercion(st));
 
-                conect.close();
+                conexion.close();
             }
         } catch (SQLException ex) {
-            System.out.println("Hubo un error al intentar conectar a la base de datos " + url + ".El resultado enviado es " + conect + "");
+            System.out.println("Hubo un error al intentar conectar a la base de datos " + url + ".El resultado enviado es " + "");
         } catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
